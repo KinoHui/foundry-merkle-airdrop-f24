@@ -20,6 +20,8 @@ contract MerkleAirdropTest is Test, ZkSyncChainChecker {
     address user;
     address gasPayer;
     uint256 userPraivateKey;
+    bytes private SIGNATURE =
+        hex"04608c1ff2caa30822e2928da3a169298044176ddd633834d714f8b067702f6b5e815d1261abcd37e793b27980ccd7a9899d24ab96ff781da09b2464d2ed1de21b";
 
     function setUp() external {
         if (!isZkSyncChain()) {
@@ -38,6 +40,7 @@ contract MerkleAirdropTest is Test, ZkSyncChainChecker {
 
     function testCanClaim() public {
         uint256 startingBalence = token.balanceOf(user);
+        console.log("SIGNATURE's length: ", SIGNATURE.length);
 
         // vm.sign() 不需要vm.prank()
         bytes32 messageHash = merkleAirdrop.getMessageHash(user, AMOUNT_TO_CLAIM);
